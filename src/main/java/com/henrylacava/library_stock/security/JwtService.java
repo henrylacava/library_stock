@@ -10,30 +10,35 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class JwtGenerator {
+public class JwtService {
+    private final Algorithm algorithm = Algorithm.HMAC256(SecurityConstants.JWT_SECRET);
 
     public String generateToken(Authentication authentication) {
-        String name = authentication.getName();
+        String email = authentication.getName();
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-        Algorithm algorithm = Algorithm.HMAC256(SecurityConstants.JWT_SECRET);
         return JWT.create()
-                .withSubject(name)
+                .withSubject(email)
+                .withIssuer("library_stock")
                 .withIssuedAt(currentDate)
                 .withExpiresAt(expireDate)
-                .sign(algorithm);
+                .sign(this.algorithm);
+    }
+
+    public String getEmailFromJwt(String token) {
+        return JWT.require(this.algorithm)
+                .build()
+                .verify(token)
+                .getSubject();
     }
 
     public boolean validateToken(String token) {
-        Algorithm algorithm = Algorithm.HMAC256(SecurityConstants.JWT_SECRET);
-
         try {
-            JWT.require(algorithm)
+            JWT.require(this.algorithm)
+                    .withIssuer("library_stock")
                     .build()
-                    .verify(token)
-                    .getSubject();
-
+                    .verify(token);
             return true;
         } catch (JWTVerificationException exception) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
