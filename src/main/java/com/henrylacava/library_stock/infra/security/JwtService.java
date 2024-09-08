@@ -7,7 +7,9 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Component
 public class JwtService {
@@ -15,14 +17,11 @@ public class JwtService {
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
-        Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
         return JWT.create()
                 .withSubject(email)
                 .withIssuer("library_stock")
-                .withIssuedAt(currentDate)
-                .withExpiresAt(expireDate)
+                .withExpiresAt(this.genExpirationDate())
                 .sign(this.algorithm);
     }
 
@@ -43,5 +42,9 @@ public class JwtService {
         } catch (JWTVerificationException exception) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
+    }
+
+    private Instant genExpirationDate() {
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }
