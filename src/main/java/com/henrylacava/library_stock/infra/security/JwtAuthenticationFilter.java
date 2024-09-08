@@ -1,4 +1,4 @@
-package com.henrylacava.library_stock.security;
+package com.henrylacava.library_stock.infra.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

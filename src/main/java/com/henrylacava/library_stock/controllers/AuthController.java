@@ -2,9 +2,9 @@ package com.henrylacava.library_stock.controllers;
 
 import com.henrylacava.library_stock.dto.AuthResponseDto;
 import com.henrylacava.library_stock.dto.LoginDto;
+import com.henrylacava.library_stock.infra.security.JwtService;
 import com.henrylacava.library_stock.repositories.RoleRepository;
 import com.henrylacava.library_stock.repositories.UserRepository;
-import com.henrylacava.library_stock.security.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

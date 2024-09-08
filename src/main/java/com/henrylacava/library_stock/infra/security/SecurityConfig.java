@@ -1,4 +1,4 @@
-package com.henrylacava.library_stock.security;
+package com.henrylacava.library_stock.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
