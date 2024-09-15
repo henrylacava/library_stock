@@ -2,6 +2,7 @@ package com.henrylacava.library_stock.controllers;
 
 import com.henrylacava.library_stock.dto.AuthResponseDto;
 import com.henrylacava.library_stock.dto.LoginDto;
+import com.henrylacava.library_stock.dto.ValidationResponseDto;
 import com.henrylacava.library_stock.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class AuthController {
     }
 
     @GetMapping("validate")
-    public ResponseEntity<String> validate() {
-        return new ResponseEntity<>("Token validated", HttpStatus.OK);
+    public ResponseEntity<ValidationResponseDto> validate() {
+        return new ResponseEntity<>(new ValidationResponseDto("Token validated."), HttpStatus.OK);
     }
 }

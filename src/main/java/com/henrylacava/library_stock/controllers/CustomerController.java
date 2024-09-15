@@ -19,7 +19,7 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<CustomerResponseDto> getCustomers(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int size
+            @RequestParam(defaultValue = "10") int size
     ) {
         return new ResponseEntity<>(customerService.getAllCustomersPaginated(page, size), HttpStatus.OK);
     }
